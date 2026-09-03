@@ -21,7 +21,9 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.vnazarov.resourcemonitor.core.telemetry.fusion.TelemetryFusionEngine
 import com.vnazarov.resourcemonitor.presentation.ui.screen.MonitorOverlay
+import org.koin.android.ext.android.inject
 
 class MonitorService : Service(), LifecycleOwner, SavedStateRegistryOwner {
 
@@ -29,6 +31,8 @@ class MonitorService : Service(), LifecycleOwner, SavedStateRegistryOwner {
         private const val CHANNEL_ID = "resource_monitor_channel"
         private const val NOTIFICATION_ID = 101
     }
+
+    private val fusionEngine: TelemetryFusionEngine by inject()
 
     override val lifecycle: Lifecycle
         field = LifecycleRegistry(this)
@@ -109,9 +113,11 @@ class MonitorService : Service(), LifecycleOwner, SavedStateRegistryOwner {
 
         params.gravity = Gravity.TOP
         windowManager.addView(overlayView, params)
+        fusionEngine.start()
     }
 
     override fun onDestroy() {
+        fusionEngine.stop()
         windowManager.removeView(overlayView)
         lifecycle.currentState = Lifecycle.State.DESTROYED
 

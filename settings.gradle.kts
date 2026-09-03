@@ -21,4 +21,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "Resource Monitor"
 include(":app")
+include(":core:model")
+include(":core:animation-contract")
+include(":core:telemetry-api")
+include(":core:telemetry-mock")
+include(":core:telemetry-fusion")
+include(":core:designsystem")
+include(":animations:holographic-rings")
  

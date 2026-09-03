@@ -69,4 +69,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.service)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.savedstate.ktx)
+
+    implementation(project(":core:model"))
+    implementation(project(":core:animation-contract"))
+    implementation(project(":core:telemetry-api"))
+    implementation(project(":core:telemetry-mock"))
+    implementation(project(":core:telemetry-fusion"))
+    implementation(project(":core:designsystem"))
+    implementation(project(":animations:holographic-rings"))
 }
