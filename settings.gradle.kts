@@ -28,4 +28,6 @@ include(":core:telemetry-mock")
 include(":core:telemetry-fusion")
 include(":core:designsystem")
 include(":animations:holographic-rings")
+include(":core:telemetry-system")
+include(":core:config")
  

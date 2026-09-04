@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -71,8 +72,10 @@ dependencies {
     implementation(libs.androidx.savedstate.ktx)
 
     implementation(project(":core:model"))
+    implementation(project(":core:config"))
     implementation(project(":core:animation-contract"))
     implementation(project(":core:telemetry-api"))
+    implementation(project(":core:telemetry-system"))
     implementation(project(":core:telemetry-mock"))
     implementation(project(":core:telemetry-fusion"))
     implementation(project(":core:designsystem"))

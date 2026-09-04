@@ -44,4 +44,23 @@ object ThrottlingClassifier {
             else -> ThrottleState.NOMINAL
         }
     }
+
+    fun classifyStorage(packet: RawTelemetryPacket): ThrottleState {
+        return when {
+            packet.isStorageStall -> ThrottleState.CRITICAL_THROTTLED
+            packet.ioWaitCycleDelta > 50L -> ThrottleState.WARNING_BOOST
+            else -> ThrottleState.NOMINAL
+        }
+    }
+
+    fun classifyGpu(packet: RawTelemetryPacket): ThrottleState {
+        val thermalStatus = packet.thermalStatusLevel ?: 0
+        val gpuTemp = packet.gpuTemperatureMilliC ?: 0
+        val load = packet.gpuLoadPercentage
+        return when {
+            thermalStatus >= 4 || gpuTemp >= 60_000 || load >= 95f -> ThrottleState.CRITICAL_THROTTLED
+            thermalStatus >= 2 || gpuTemp >= 50_000 || load >= 70f -> ThrottleState.WARNING_BOOST
+            else -> ThrottleState.NOMINAL
+        }
+    }
 }

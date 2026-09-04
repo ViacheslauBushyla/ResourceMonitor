@@ -22,3 +22,15 @@ interface NetworkCollector {
     fun isWifiConnected(): Boolean
     fun getWifiLinkSpeedMbps(): Int?
 }
+
+interface StorageCollector {
+    fun getTotalBytes(): Long
+    fun getAvailableBytes(): Long
+    fun getWriteLatencyMs(): Float
+    fun getIoWaitCycles(): Long
+}
+
+interface ThermalCollector {
+    fun getThermalStatusLevel(): Int
+    fun getBatteryTemperatureMilliC(): Int?
+}

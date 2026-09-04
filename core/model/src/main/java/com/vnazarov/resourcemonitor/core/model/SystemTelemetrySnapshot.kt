@@ -7,5 +7,6 @@ data class SystemTelemetrySnapshot(
     val network: MetricValue = MetricValue(),
     val cellularQuality: MetricValue = MetricValue(),
     val storageIo: MetricValue = MetricValue(),
+    val gpu: MetricValue = MetricValue(),
     val worstThrottleState: ThrottleState = ThrottleState.NOMINAL
 )

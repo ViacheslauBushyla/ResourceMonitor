@@ -103,7 +103,7 @@ fun HolographicRingsRenderer(
             // 1. Draw central energy aura / core
             val pulseMultiplier = if (params.isMeltdownAlert) pulseTick else 1.0f
             val coreRadius = baseRadius * 0.45f * pulseMultiplier
-            val coreColor = if (params.isMeltdownAlert) NeonPalette.MeltdownRed else params.innerColor
+            val coreColor = if (params.isMeltdownAlert) NeonPalette.MeltdownRed else params.ring5Color
 
             drawCircle(
                 brush = Brush.radialGradient(
@@ -121,43 +121,64 @@ fun HolographicRingsRenderer(
 
             // Calculate rotational angles based on speed RPS and time elapsed
             val elapsedSec = timeTick * 10f
-            val outerAngle = elapsedSec * params.outerRingSpeedRps * 2f * PI.toFloat()
-            val middleAngle = elapsedSec * params.middleRingSpeedRps * 2f * PI.toFloat()
-            val innerAngle = elapsedSec * params.innerRingSpeedRps * 2f * PI.toFloat()
+            val angle1 = elapsedSec * params.ring1SpeedRps * 2f * PI.toFloat()
+            val angle2 = elapsedSec * params.ring2SpeedRps * 2f * PI.toFloat()
+            val angle3 = elapsedSec * params.ring3SpeedRps * 2f * PI.toFloat()
+            val angle4 = elapsedSec * params.ring4SpeedRps * 2f * PI.toFloat()
+            val angle5 = elapsedSec * params.ring5SpeedRps * 2f * PI.toFloat()
 
-            // Outer Ring: Cyan CPU, rotates around Y with 15 deg tilt
-            val outerColor = if (params.isMeltdownAlert) NeonPalette.MeltdownRed else params.outerColor
+            // Ring 1 (CPU): Outer, radius 1.00 R_0, Y-axis rotation with 15 deg tilt
             drawProjectedRing(
                 center = center,
-                radius = baseRadius,
+                radius = baseRadius * 1.00f,
                 rotX = 0.26f, // ~15 deg tilt
-                rotY = outerAngle,
+                rotY = angle1,
                 rotZ = 0f,
-                color = outerColor,
+                color = params.ring1Color,
                 bloomIntensity = params.bloomIntensity
             )
 
-            // Middle Ring: Orange RAM, rotates around X with 15 deg tilt
-            val middleColor = if (params.isMeltdownAlert) NeonPalette.MeltdownRed else params.middleColor
+            // Ring 2 (RAM): Radius 0.84 R_0, X-axis rotation with 15 deg tilt
             drawProjectedRing(
                 center = center,
-                radius = baseRadius * 0.82f,
-                rotX = middleAngle,
-                rotY = 0.26f,
+                radius = baseRadius * 0.84f,
+                rotX = angle2,
+                rotY = 0.26f, // ~15 deg tilt
                 rotZ = 0.15f,
-                color = middleColor,
+                color = params.ring2Color,
                 bloomIntensity = params.bloomIntensity
             )
 
-            // Inner Ring: Magenta GPU/Net, tilted diagonal 45 deg
-            val innerRingColor = if (params.isMeltdownAlert) NeonPalette.MeltdownRed else params.innerColor
+            // Ring 3 (Network): Radius 0.68 R_0, diagonal 45 deg rotation
             drawProjectedRing(
                 center = center,
-                radius = baseRadius * 0.65f,
-                rotX = innerAngle * 0.7f,
-                rotY = innerAngle,
-                rotZ = 0.78f, // ~45 deg
-                color = innerRingColor,
+                radius = baseRadius * 0.68f,
+                rotX = angle3 * 0.707f,
+                rotY = angle3 * 0.707f,
+                rotZ = 0.785f, // ~45 deg
+                color = params.ring3Color,
+                bloomIntensity = params.bloomIntensity
+            )
+
+            // Ring 4 (Storage SSD): Radius 0.52 R_0, counter-diagonal -45 deg rotation
+            drawProjectedRing(
+                center = center,
+                radius = baseRadius * 0.52f,
+                rotX = angle4 * 0.707f,
+                rotY = -angle4 * 0.707f,
+                rotZ = -0.785f, // ~ -45 deg
+                color = params.ring4Color,
+                bloomIntensity = params.bloomIntensity
+            )
+
+            // Ring 5 (GPU/Thermal Corona): Radius 0.36 R_0, planar with 5 deg nutation
+            drawProjectedRing(
+                center = center,
+                radius = baseRadius * 0.36f,
+                rotX = sin(angle5 * 0.5f) * 0.09f, // ~5 deg nutation
+                rotY = cos(angle5 * 0.5f) * 0.09f, // ~5 deg nutation
+                rotZ = angle5,
+                color = params.ring5Color,
                 bloomIntensity = params.bloomIntensity
             )
 

@@ -16,5 +16,9 @@ data class RawTelemetryPacket(
     val sinrDb: Int? = null,
     val isWifiActive: Boolean = false,
     val wifiLinkSpeedMbps: Int? = null,
-    val ioWaitCycleDelta: Long = 0L
+    val ioWaitCycleDelta: Long = 0L,
+    val gpuLoadPercentage: Float = 0f,
+    val gpuTemperatureMilliC: Int? = null,
+    val isStorageStall: Boolean = false,
+    val thermalStatusLevel: Int? = null
 )

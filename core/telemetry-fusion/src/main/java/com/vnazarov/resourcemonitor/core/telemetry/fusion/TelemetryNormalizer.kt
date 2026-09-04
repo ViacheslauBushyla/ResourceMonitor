@@ -31,4 +31,16 @@ object TelemetryNormalizer {
         // Range: -140 dBm (dead zone, 0.0) to -65 dBm (excellent signal, 1.0)
         return ((rsrp + 140f) / 75f).coerceIn(0f, 1f)
     }
+
+    fun normalizeStorage(packet: RawTelemetryPacket): Float {
+        if (packet.isStorageStall) return 0.95f
+        if (packet.ioWaitCycleDelta > 0L) {
+            return (packet.ioWaitCycleDelta / 100f).coerceIn(0f, 1f)
+        }
+        return 0f
+    }
+
+    fun normalizeGpu(packet: RawTelemetryPacket): Float {
+        return (packet.gpuLoadPercentage / 100f).coerceIn(0f, 1f)
+    }
 }

@@ -10,6 +10,9 @@ object NeonPalette {
     val WarningAmber = Color(0xFFFFAB00)
     val NominalGreen = Color(0xFF00E676)
     val MemoryThrashPurple = Color(0xFFBA68C8)
+    val IceBlueStorage = Color(0xFF80D8FF)
+    val EmeraldGpu = Color(0xFF00E676)
+    val StorageStallWhite = Color(0xFFFFFFFF)
     
     // Ambient darks
     val HudBackground = Color(0xCC050B14)
